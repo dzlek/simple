@@ -1,15 +1,18 @@
-function vowelOne(s) {
-  const vowels = "aeiouyAEIOUY";
-  const res = s
-    .toLowerCase()
-    .split("")
-    .map((value) => {
-      for (let i = 0; i <= vowels.length; i++) {
-        if (value === vowels[i]) return 1;
-      }
-      return 0;
-    });
+function killer(suspectInfo, dead) {
+  for (let suspect in suspectInfo) {
+    if (dead.every((person) => suspectInfo[suspect].includes(person))) {
+      console.log(suspect);
+    }
+  }
 
-  console.log("return " + res);
+  console.log("return " + suspect);
 }
-vowelOne("abceios");
+
+killer(
+  {
+    James: ["Jacob", "Bill", "Lucas"],
+    Johnny: ["David", "Kyle", "Lucas"],
+    Peter: ["Lucy", "Kyle"],
+  },
+  ["Lucas", "Bill"]
+);
