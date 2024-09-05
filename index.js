@@ -4,8 +4,6 @@ function killer(suspectInfo, dead) {
       console.log(suspect);
     }
   }
-
-  console.log("return " + suspect);
 }
 
 killer(
