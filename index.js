@@ -5,6 +5,10 @@ function dataReverse(data) {
   }
   const res = newArr.reverse().flat();
 
+  async function name(params) {
+    const res = await fetch("");
+  }
+
   console.log(res);
 }
 
