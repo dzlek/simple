@@ -1,15 +1,25 @@
-function dataReverse(data) {
-  const newArr = [];
-  for (let i = 0; i < data.length; i = i + 8) {
-    newArr.push(data.slice(i, i + 8));
-  }
-  const res = newArr.reverse().flat();
+function strCount(obj) {
+  let count = 0;
 
-  async function name(params) {
-    const res = await fetch("");
+  function countString(value) {
+    if (typeof value === "string") count++;
+    if (typeof value === "object" && value !== null) {
+      for (let keys in value) {
+        countString(value[keys]);
+      }
+    }
   }
+  countString(obj);
 
-  console.log(res);
+  console.log("return " + count);
 }
 
-dataReverse([0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1]);
+strCount({
+  first: "1",
+  second: "2",
+  third: false,
+  fourth: ["anytime", 2, 3, 4],
+  fifth: null,
+  sixth: undefined,
+  seventh: {},
+});
