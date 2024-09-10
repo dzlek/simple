@@ -1,21 +1,16 @@
-function bingo(ticket, win) {
-  let miniWin = 0;
-  const res = ticket.map((el) => {
-    let mini = 0;
-    el[0].split("").forEach((value, i) => {
-      if (value.charCodeAt(0) === el[1]) mini++;
-    });
-    if (mini > 0) miniWin++;
-  });
-
-  return miniWin >= win ? "Winner!" : "Loser!";
+function toWeirdCase(string) {
+  const res = string
+    .split(" ")
+    .map((word) =>
+      word
+        .split("")
+        .map((letter, index) =>
+          index % 2 === 0 ? letter.toUpperCase() : letter.toLowerCase()
+        )
+        .join("")
+    )
+    .join(" ");
+  return res;
 }
 
-bingo(
-  [
-    ["ABC", 65],
-    ["HGR", 74],
-    ["BYHT", 74],
-  ],
-  2
-);
+console.log(toWeirdCase("This is a test"));
