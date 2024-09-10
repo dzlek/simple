@@ -1,47 +1,29 @@
-var Alphabet = {
-  BINARY: "01",
-  OCTAL: "01234567",
-  DECIMAL: "0123456789",
-  HEXA_DECIMAL: "0123456789abcdef",
-  ALPHA_LOWER: "abcdefghijklmnopqrstuvwxyz",
-  ALPHA_UPPER: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  ALPHA: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-  ALPHA_NUMERIC:
-    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-};
+function getCard() {
+  let res = [];
 
-var bin = Alphabet.BINARY,
-  oct = Alphabet.OCTAL,
-  dec = Alphabet.DECIMAL,
-  hex = Alphabet.HEXA_DECIMAL,
-  allow = Alphabet.ALPHA_LOWER,
-  alup = Alphabet.ALPHA_UPPER,
-  alpha = Alphabet.ALPHA,
-  alnum = Alphabet.ALPHA_NUMERIC;
-
-function convert(input, source, target) {
-  function fromInputTo10(input, source) {
-    let res = 0;
-    for (let i = 0; i < input.length; i++) {
-      res = res * source.length + source.indexOf(input[i]);
+  function createArray(letter, num, start, end) {
+    let set = new Set();
+    while (set.size < num) {
+      set.add(
+        letter + String(Math.floor(start + Math.random() * (end + 1 - start)))
+      );
     }
-    return res;
+
+    [...set].map((el) => res.push(el));
   }
 
-  function from10ToTarget(value, target) {
-    if (value === 0) return target[0];
-    let base = target.length;
-    let res = "";
-    while (value > 0) {
-      res = target[value % base] + res;
-      value = Math.floor(value / base);
-    }
-    return res;
+  createArray("B", 5, 1, 15);
+  createArray("I", 5, 16, 30);
+  createArray("N", 4, 31, 45);
+  createArray("G", 5, 46, 60);
+  createArray("O", 5, 61, 75);
+
+  function shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
   }
+  shuffle(res);
 
-  const base10Value = fromInputTo10(input, source);
-
-  console.log("return " + from10ToTarget(base10Value, target));
+  console.log("return " + res);
 }
 
-convert("15", dec, oct);
+getCard();
