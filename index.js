@@ -1,12 +1,21 @@
-function isPrime(num) {
-  if (num <= 1) return false;
-  if (num === 2) return true;
-  if (num % 2 === 0) return false;
-  for (let i = 3; i <= Math.sqrt(num); i += 2) {
-    if (num % i === 0) return false;
-  }
+function bingo(ticket, win) {
+  let miniWin = 0;
+  const res = ticket.map((el) => {
+    let mini = 0;
+    el[0].split("").forEach((value, i) => {
+      if (value.charCodeAt(0) === el[1]) mini++;
+    });
+    if (mini > 0) miniWin++;
+  });
 
-  return true;
+  return miniWin >= win ? "Winner!" : "Loser!";
 }
 
-isPrime(75);
+bingo(
+  [
+    ["ABC", 65],
+    ["HGR", 74],
+    ["BYHT", 74],
+  ],
+  2
+);
