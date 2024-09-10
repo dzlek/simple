@@ -1,16 +1,12 @@
-var whatTimeIsIt = function (angle) {
-  if (angle % 360 === 0) return "12:00";
+function isPrime(num) {
+  if (num <= 1) return false;
+  if (num === 2) return true;
+  if (num % 2 === 0) return false;
+  for (let i = 3; i <= Math.sqrt(num); i += 2) {
+    if (num % i === 0) return false;
+  }
 
-  const time = Math.floor(angle * 2);
-  const hours = time < 60 ? 12 : Math.floor(time / 60);
-  const minutes = time < 60 ? time : time - hours * 60;
-  res =
-    hours.toString().padStart(2, "0") +
-    ":" +
-    minutes.toString().padStart(2, "0");
-  console.log("return" + res);
+  return true;
+}
 
-  return "12:00";
-};
-
-whatTimeIsIt(359.9);
+isPrime(75);
