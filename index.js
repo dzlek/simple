@@ -1,14 +1,14 @@
-function likes(names) {
-  if (names.length === 0) return "no one likes this";
-  if (names.length === 1) return `${names[0]} likes this`;
-  if (names.length === 2) return `${names[0]} and ${names[1]} like this`;
-  if (names.length === 3)
-    return `${names[0]}, ${names[1]} and ${names[2]} like this`;
-
-  return `${names[0]}, ${names[1]} and ${names.length - 2} others like this`;
+function rgb(r, g, b) {
+  const converter = (value) =>
+    (value >= 255 ? 255 : value < 0 ? 0 : value)
+      .toString(16)
+      .padStart(2, "0")
+      .toUpperCase();
+  const res = converter(r) + converter(g) + converter(b);
+  return res;
 }
 
-console.log(likes(["Alex", "Jacob", "Mark", "Max"]));
+console.log(rgb(300, 255, 255));
 
 // []                                -->  "no one likes this"
 // ["Peter"]                         -->  "Peter likes this"
