@@ -14,56 +14,67 @@
       align-items: center;
       background-color: #000;
       flex-direction: column;
+      overflow: hidden; /* Отключаем прокрутку */
     }
 
     video {
       width: 100%;
       height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      transition: transform 0.25s ease; 
-      object-fit: cover; 
+      object-fit: cover; /* Видео будет покрывать весь экран */
+      transition: transform 0.25s ease;
     }
 
-
+    /* Слайдер для зума, полупрозрачный, позиционирован в левом верхнем углу */
     .zoom-control {
       position: absolute;
-      top: 10%;
-      left: 20%;
-      transform: translate(-50%, -50%);
+      top: 20px; /* Немного отступим от верхнего края */
+      left: 20px; /* Немного отступим от левого края */
       width: 80%;
-      max-width: 400px;
-      background: rgba(0, 0, 0, 0.1); 
+      max-width: 200px; /* Ограничиваем максимальный размер слайдера */
+      background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
       border: 1px solid #fff;
       border-radius: 10px;
       padding: 5px;
+      z-index: 10; /* Слайдер будет сверху */
     }
 
-
+    /* Адаптивность для мобильных устройств */
     @media (max-width: 768px) {
-      video {
-        width: 100%;
-        height: 100%;
+      body {
+        height: 100vh; /* Устанавливаем высоту body для мобильных устройств */
+        width: 100vw; /* Устанавливаем ширину body для мобильных устройств */
+        overflow: hidden; /* Чтобы избежать полос прокрутки */
       }
 
-
+      /* Поворот видео на мобильных устройствах */
       body {
         transform: rotate(90deg);
         transform-origin: center;
+        width: 100vh; /* Меняем ширину и высоту на мобильном устройстве */
+        height: 100vw; /* Меняем ширину и высоту на мобильном устройстве */
       }
 
+      video {
+        width: 100vw; /* Видео будет растягиваться на весь экран */
+        height: 100vh; /* Видео будет растягиваться на весь экран */
+        object-fit: cover; /* Видео будет покрывать экран, без обрезки */
+      }
 
+      /* Слайдер выше, чтобы не выходил за пределы экрана */
       .zoom-control {
-        top: 10%;
+        top: 10px; /* Убираем слайдер от верхнего края */
+        left: 10px; /* Слайдер не будет вылазить за экран */
         width: 60%;
+        max-width: 150px; /* Ограничиваем размер слайдера */
       }
     }
 
- 
+    /* Стили для поддержания видео в портретной ориентации */
     @media (orientation: portrait) {
       video {
         width: 100%;
-        height: auto;
+        height: 100%; /* Убедимся, что видео занимает весь экран */
+        object-fit: cover; /* Видео будет покрывать экран */
       }
     }
   </style>
@@ -88,10 +99,11 @@
       hls.loadSource(streamUrl);
       hls.attachMedia(video);
     } else {
-     
+      // Для браузеров, которые поддерживают HLS natively
       video.src = streamUrl;
     }
 
+    // Поддержка зума двумя пальцами на мобильных устройствах
     let initialDistance = null;
 
     video.addEventListener('touchstart', function(event) {
