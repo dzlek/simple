@@ -24,20 +24,6 @@
       transition: transform 0.25s ease;
     }
 
-    /* Слайдер для зума, полупрозрачный, позиционирован в левом верхнем углу */
-    .zoom-control {
-      position: absolute;
-      top: 20px; /* Немного отступим от верхнего края */
-      left: 20px; /* Немного отступим от левого края */
-      width: 80%;
-      max-width: 200px; /* Ограничиваем максимальный размер слайдера */
-      background: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
-      border: 1px solid #fff;
-      border-radius: 10px;
-      padding: 5px;
-      z-index: 10; /* Слайдер будет сверху */
-    }
-
     /* Адаптивность для мобильных устройств */
     @media (max-width: 768px) {
       body {
@@ -59,14 +45,6 @@
         height: 100vh; /* Видео будет растягиваться на весь экран */
         object-fit: cover; /* Видео будет покрывать экран, без обрезки */
       }
-
-      /* Слайдер выше, чтобы не выходил за пределы экрана */
-      .zoom-control {
-        top: 10px; /* Убираем слайдер от верхнего края */
-        left: 10px; /* Слайдер не будет вылазить за экран */
-        width: 60%;
-        max-width: 150px; /* Ограничиваем размер слайдера */
-      }
     }
 
     /* Стили для поддержания видео в портретной ориентации */
@@ -81,18 +59,10 @@
 </head>
 <body>
   <video id="video" controls autoplay></video>
-  <input type="range" id="zoom" class="zoom-control" min="1" max="3" step="0.1" value="1">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     const video = document.getElementById('video');
-    const zoomControl = document.getElementById('zoom');
     const streamUrl = 'https://streaming.airmax.pl/wroclawpanorama/tracks-v1/mono.m3u8';
-
-    // Применить зум при изменении значения слайдера
-    zoomControl.addEventListener('input', function() {
-      const scale = zoomControl.value;
-      video.style.transform = `scale(${scale})`;
-    });
 
     if (Hls.isSupported()) {
       const hls = new Hls();
@@ -101,31 +71,6 @@
     } else {
       // Для браузеров, которые поддерживают HLS natively
       video.src = streamUrl;
-    }
-
-    // Поддержка зума двумя пальцами на мобильных устройствах
-    let initialDistance = null;
-
-    video.addEventListener('touchstart', function(event) {
-      if (event.touches.length === 2) {
-        initialDistance = getTouchDistance(event);
-      }
-    });
-
-    video.addEventListener('touchmove', function(event) {
-      if (event.touches.length === 2 && initialDistance !== null) {
-        const currentDistance = getTouchDistance(event);
-        const scaleChange = currentDistance / initialDistance;
-        const currentScale = parseFloat(video.style.transform.replace('scale(', '').replace(')', '')) || 1;
-        video.style.transform = `scale(${currentScale * scaleChange})`;
-        initialDistance = currentDistance;
-      }
-    });
-
-    function getTouchDistance(event) {
-      const dx = event.touches[0].pageX - event.touches[1].pageX;
-      const dy = event.touches[0].pageY - event.touches[1].pageY;
-      return Math.sqrt(dx * dx + dy * dy);
     }
   </script>
 </body>
