@@ -9,51 +9,13 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #000;
-      flex-direction: column;
-      overflow: hidden; /* Отключаем прокрутку */
+      width: 100%;
+      overflow: hidden;
     }
-
     video {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Видео будет покрывать весь экран */
-      transition: transform 0.25s ease;
-    }
-
-    /* Адаптивность для мобильных устройств */
-    @media (max-width: 768px) {
-      body {
-        height: 100vh; /* Устанавливаем высоту body для мобильных устройств */
-        width: 100vw; /* Устанавливаем ширину body для мобильных устройств */
-        overflow: hidden; /* Чтобы избежать полос прокрутки */
-      }
-
-      /* Поворот видео на мобильных устройствах */
-      body {
-        transform: rotate(90deg);
-        transform-origin: center;
-        width: 100vh; /* Меняем ширину и высоту на мобильном устройстве */
-        height: 100vw; /* Меняем ширину и высоту на мобильном устройстве */
-      }
-
-      video {
-        width: 100vw; /* Видео будет растягиваться на весь экран */
-        height: 100vh; /* Видео будет растягиваться на весь экран */
-        object-fit: cover; /* Видео будет покрывать экран, без обрезки */
-      }
-    }
-
-    /* Стили для поддержания видео в портретной ориентации */
-    @media (orientation: portrait) {
-      video {
-        width: 100%;
-        height: 100%; /* Убедимся, что видео занимает весь экран */
-        object-fit: cover; /* Видео будет покрывать экран */
-      }
+      object-fit: cover;
     }
   </style>
 </head>
@@ -63,7 +25,7 @@
   <script>
     const video = document.getElementById('video');
     const streamUrl = 'https://streaming.airmax.pl/wroclawpanorama/tracks-v1/mono.m3u8';
-  
+
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(streamUrl);
@@ -73,6 +35,24 @@
       video.src = streamUrl;
       video.play();  // Принудительное воспроизведение
     }
+
+    // Функция для перехода в полноэкранный режим
+    function goFullscreen() {
+      if (video.requestFullscreen) {
+        video.requestFullscreen();
+      } else if (video.mozRequestFullScreen) { // Firefox
+        video.mozRequestFullScreen();
+      } else if (video.webkitRequestFullscreen) { // Chrome, Safari и Opera
+        video.webkitRequestFullscreen();
+      } else if (video.msRequestFullscreen) { // Internet Explorer/Edge
+        video.msRequestFullscreen();
+      }
+    }
+
+    // Переход в полноэкранный режим через 1 секунду после начала воспроизведения
+    video.addEventListener('play', function () {
+      setTimeout(goFullscreen, 1000);
+    });
   </script>
 </body>
 </html>
