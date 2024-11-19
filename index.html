@@ -1,14 +1,52 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Stream</title>
+  <title>wroclaw-panorama</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+    }
+
+    video {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    /* Добавить адаптивность для маленьких экранов */
+    @media (max-width: 768px) {
+      video {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    @media (orientation: portrait) {
+      video {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    @media (orientation: landscape) {
+      video {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-  <video id="video" controls autoplay style="width: 100%; max-width: 1920px;"></video>
+  <video id="video" controls autoplay></video>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     const video = document.getElementById('video');
@@ -18,12 +56,10 @@
       const hls = new Hls();
       hls.loadSource(streamUrl);
       hls.attachMedia(video);
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = streamUrl;
     } else {
-      console.error('HLS не поддерживается в этом браузере.');
+      // Для браузеров, которые поддерживают HLS natively
+      video.src = streamUrl;
     }
   </script>
 </body>
 </html>
-
