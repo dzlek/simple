@@ -25,9 +25,11 @@
 
     /* Поворот видео для мобильных устройств в портретной ориентации */
     @media (max-width: 768px) {
-      video {
+      body {
         transform: rotate(90deg);
         transform-origin: center center;
+      }
+      video {
         height: 100vw; /* Видео по ширине экрана */
         width: 100vh;  /* Видео по высоте экрана */
       }
