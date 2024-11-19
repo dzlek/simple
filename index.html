@@ -13,31 +13,54 @@
       justify-content: center;
       align-items: center;
       background-color: #000;
+      flex-direction: column;
     }
 
     video {
       width: 100%;
-      height: auto;
+      height: 100%;
       max-width: 100%;
       max-height: 100%;
+      transition: transform 0.25s ease; 
+      object-fit: cover; 
     }
 
-    /* Добавить адаптивность для маленьких экранов */
+
+    .zoom-control {
+      position: absolute;
+      top: 10%;
+      left: 20%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 400px;
+      background: rgba(0, 0, 0, 0.1); 
+      border: 1px solid #fff;
+      border-radius: 10px;
+      padding: 5px;
+    }
+
+
     @media (max-width: 768px) {
       video {
         width: 100%;
-        height: auto;
+        height: 100%;
+      }
+
+
+      body {
+        transform: rotate(90deg);
+        transform-origin: center;
+      }
+
+
+      .zoom-control {
+        top: 10%;
+        width: 60%;
       }
     }
 
+ 
     @media (orientation: portrait) {
-      video {
-        width: 100%;
-        height: auto;
-      }
-    }
-
-    @media (orientation: landscape) {
       video {
         width: 100%;
         height: auto;
@@ -47,18 +70,50 @@
 </head>
 <body>
   <video id="video" controls autoplay></video>
+  <input type="range" id="zoom" class="zoom-control" min="1" max="3" step="0.1" value="1">
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
     const video = document.getElementById('video');
+    const zoomControl = document.getElementById('zoom');
     const streamUrl = 'https://streaming.airmax.pl/wroclawpanorama/tracks-v1/mono.m3u8';
+
+    // Применить зум при изменении значения слайдера
+    zoomControl.addEventListener('input', function() {
+      const scale = zoomControl.value;
+      video.style.transform = `scale(${scale})`;
+    });
 
     if (Hls.isSupported()) {
       const hls = new Hls();
       hls.loadSource(streamUrl);
       hls.attachMedia(video);
     } else {
-      // Для браузеров, которые поддерживают HLS natively
+     
       video.src = streamUrl;
+    }
+
+    let initialDistance = null;
+
+    video.addEventListener('touchstart', function(event) {
+      if (event.touches.length === 2) {
+        initialDistance = getTouchDistance(event);
+      }
+    });
+
+    video.addEventListener('touchmove', function(event) {
+      if (event.touches.length === 2 && initialDistance !== null) {
+        const currentDistance = getTouchDistance(event);
+        const scaleChange = currentDistance / initialDistance;
+        const currentScale = parseFloat(video.style.transform.replace('scale(', '').replace(')', '')) || 1;
+        video.style.transform = `scale(${currentScale * scaleChange})`;
+        initialDistance = currentDistance;
+      }
+    });
+
+    function getTouchDistance(event) {
+      const dx = event.touches[0].pageX - event.touches[1].pageX;
+      const dy = event.touches[0].pageY - event.touches[1].pageY;
+      return Math.sqrt(dx * dx + dy * dy);
     }
   </script>
 </body>
