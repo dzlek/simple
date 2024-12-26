@@ -1,5 +1,11 @@
 console.log("logged");
-login;
-sdfgsdfgs;
+dsklajfalskjd;
+hh;
+dsfgsdf;
+dsdf;
 console.log("awesome");
 console.log("logged");
+
+export function sum(a, b) {
+  return a + b;
+}
