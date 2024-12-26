@@ -1,8 +1,5 @@
 console.log("logged");
-dsklajfalskjd;
-hh;
-dsfgsdf;
-dsdf;
+
 console.log("awesome");
 console.log("logged");
 
