@@ -1,0 +1,5 @@
+echo "======husky pre-commit started======"
+npm run lint
+npm test
+npm run coverage
+echo "======husky pre-commit finished======"
