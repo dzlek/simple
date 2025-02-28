@@ -23,6 +23,6 @@ console.log("start");
 let a = 2;
 let b = 3;
 
-const sum = (a, b) => a + b;
+export const sum = (a, b) => a + b;
 
 console.log(sum(a, b));
