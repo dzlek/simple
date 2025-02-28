@@ -20,9 +20,40 @@ console.log("start");
 
 // console.log(undefined * 2);
 
+//Task1
 let a = 2;
 let b = 3;
-
 export const sum = (a, b) => a + b;
 
-console.log(sum(a, b));
+//Task2
+const array1 = [
+  true,
+  true,
+  true,
+  false,
+  true,
+  true,
+  true,
+  true,
+  true,
+  false,
+  true,
+  false,
+  true,
+  false,
+  false,
+  true,
+  true,
+  true,
+  true,
+  true,
+  false,
+  false,
+  true,
+  true,
+];
+export function countSheeps(arrayOfSheep: (boolean | undefined | null)[]) {
+  return arrayOfSheep.filter(Boolean).length;
+}
+
+console.log(countSheeps(array1));
