@@ -1,0 +1,3 @@
+echo "======husky pre-push started======"
+npm run coverage
+echo "======husky pre-push finished======"
