@@ -57,3 +57,11 @@ export function countSheeps(arrayOfSheep: (boolean | undefined | null)[]) {
 }
 
 console.log(countSheeps(array1));
+
+
+//Task3
+export function areYouPlayingBanjo(name: string): string {
+  return name[0].toLowerCase() === 'r' ? name + " plays banjo" : name + " does not play banjo"
+}
+
+console.log(areYouPlayingBanjo("rartin"));
